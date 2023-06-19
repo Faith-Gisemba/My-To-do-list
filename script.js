@@ -15,13 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		`;
 		tasksContainer.appendChild(taskElement);
 		newTaskInput.value = "";
+		
 	  }
 	});
   
 	tasksContainer.addEventListener("click", function (event) {
-	  if (event.target.classList.contains("task")) {
-		event.target.classList.toggle("completed");
-	  } else if (event.target.classList.contains("delete")) {
+	   if (event.target.classList.contains("delete")) {
 		var taskElement = event.target.closest(".task");
 		taskElement.remove();
 	  } else if (event.target.classList.contains("update")) {
@@ -32,9 +31,28 @@ document.addEventListener("DOMContentLoaded", function () {
 		taskElement.remove();
 	  }
 	});
+  
+	var links = ['https://dummyjson.com/todos/1', 'https://dummyjson.com/todos/2', 'https://dummyjson.com/todos/3', 'https://dummyjson.com/todos/4', 'https://dummyjson.com/todos/5'];
+  
+	links.forEach(function (link) {
+	  fetch(link)
+		.then(function (response) {
+		  return response.json();
+		})
+		.then(function (data) {
+		  var taskText = data.title || data.todo;
+		  var taskElement = document.createElement("div");
+		  taskElement.classList.add("task");
+		  taskElement.innerHTML = `
+			<span>${taskText}</span>
+			<button class="delete">Delete</button>
+			<button class="update">Update</button>
+		  `;
+		  tasksContainer.appendChild(taskElement);
+		})
+		.catch(function (error) {
+		  console.log("Error fetching data:", error);
+		});
+	});
   });
-  
-  
-  
-  
   
