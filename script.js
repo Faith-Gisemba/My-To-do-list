@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		taskElement.innerHTML = `
 		  <span>${taskText}</span>
 		  <button class="delete">Delete</button>
+		  <button class="update">Update</button>
 		`;
 		tasksContainer.appendChild(taskElement);
 		newTaskInput.value = "";
@@ -23,10 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
 	  } else if (event.target.classList.contains("delete")) {
 		var taskElement = event.target.closest(".task");
 		taskElement.remove();
+	  } else if (event.target.classList.contains("update")) {
+		var taskElement = event.target.closest(".task");
+		var spanElement = taskElement.querySelector("span");
+		var taskText = spanElement.textContent;
+		newTaskInput.value = taskText;
+		taskElement.remove();
 	  }
 	});
   });
-  
   
   
   
